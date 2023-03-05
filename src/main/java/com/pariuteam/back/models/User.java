@@ -18,6 +18,8 @@ public class User {
     private String mail;
     private Integer streetNumber;
     private String streetName;
+    private String buildingNumber;
+    private String flatNumber;
     private String cityName;
     private String postalCode;
 }
