@@ -20,8 +20,10 @@ public class UserService {
 
     public User addUser(User user) {
         if(userValidator.isUserValid(user)){
-            userRepository.save(user);
-            return user;
+            if(userRepository.findByMail(user.getMail()).size()==0){
+                userRepository.save(user);
+                return user;
+            }
         }
         return null;
     }
