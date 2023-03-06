@@ -4,6 +4,7 @@ import com.pariuteam.back.models.User;
 import com.pariuteam.back.services.UserService;
 import jakarta.persistence.GeneratedValue;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,8 +23,8 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public User addUser(@RequestBody User user){
-        return userService.addUser(user);
+    public ResponseEntity<User> addUser(@RequestBody User user){
+        return ResponseEntity.ok(userService.addUser(user));
     }
 
 }

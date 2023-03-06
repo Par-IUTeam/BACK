@@ -21,8 +21,7 @@ public class UserService {
     public User addUser(User user) {
         if(userValidator.isUserValid(user)){
             if(userRepository.findByMail(user.getMail()).size()==0){
-                userRepository.save(user);
-                return user;
+                return userRepository.save(user);
             }
         }
         return null;
