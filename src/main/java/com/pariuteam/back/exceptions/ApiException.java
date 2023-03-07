@@ -1,4 +1,4 @@
-package com.pariuteam.back.exceptions.handlers;
+package com.pariuteam.back.exceptions;
 
 public class ApiException extends RuntimeException{
     private String message;
