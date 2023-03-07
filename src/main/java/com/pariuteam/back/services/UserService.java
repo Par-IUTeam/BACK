@@ -1,6 +1,5 @@
 package com.pariuteam.back.services;
 
-import com.pariuteam.back.ApiErrors;
 import com.pariuteam.back.models.User;
 import com.pariuteam.back.repositories.UserRepository;
 import com.pariuteam.back.validators.UserValidator;
