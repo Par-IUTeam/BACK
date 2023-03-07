@@ -1,5 +1,6 @@
 package com.pariuteam.back.services;
 
+import com.pariuteam.back.exceptions.handlers.ApiException;
 import com.pariuteam.back.models.User;
 import com.pariuteam.back.repositories.UserRepository;
 import com.pariuteam.back.validators.UserValidator;
@@ -18,12 +19,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User addUser(User user) {
+    public User addUser(User user) throws ApiException {
         if(userValidator.isUserValid(user)){
             if(userRepository.findByMail(user.getMail()).size()==0){
                 return userRepository.save(user);
             }
-            throw new ApiErrors();
+            throw new ApiException();
         }
         return null;
     }
