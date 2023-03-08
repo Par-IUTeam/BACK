@@ -1,6 +1,5 @@
 package com.pariuteam.back.exceptions.handlers;
 
-import com.pariuteam.back.exceptions.ApiException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
