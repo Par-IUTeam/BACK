@@ -16,8 +16,11 @@ public class Food {
 
     private String scientificFoodName;
     private String foodName;
+    @ManyToOne
     private Category category;
+    @ManyToOne
     private SubCategory subCategory;
+    @ManyToOne
     private SubSubCategory subSubCategory;
 
 }
