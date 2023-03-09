@@ -6,12 +6,16 @@ import com.pariuteam.back.models.categories.SubSubCategory;
 import com.pariuteam.back.repositories.categories.CategoryRepository;
 import com.pariuteam.back.repositories.categories.SubCategoryRepository;
 import com.pariuteam.back.repositories.categories.SubSubCategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CategoriesService {
+    @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
     private SubCategoryRepository subCategoryRepository;
+    @Autowired
     private SubSubCategoryRepository subSubCategoryRepository;
     public Boolean existCategory(Long categoryId){
         return categoryRepository.findById(categoryId).isPresent();
@@ -38,7 +42,7 @@ public class CategoriesService {
         throw new IllegalArgumentException();
     }
     public SubCategory getSubCategorie(Long subCategoryId) {
-        if(existSubSubCategory(subCategoryId)){
+        if(existSubCategory(subCategoryId)){
             return subCategoryRepository.findById(subCategoryId).get();
         }
         throw new IllegalArgumentException();

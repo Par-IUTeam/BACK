@@ -25,7 +25,7 @@ public class FoodService {
         food.setScientificFoodName(foodRequestBody.getScientificFoodName());
         food.setCategory(categoriesService.getCategorie(foodRequestBody.getCategoryId()));
         food.setSubCategory(categoriesService.getSubCategorie(foodRequestBody.getSubCategoryId()));
-        food.setSubSubCategory(categoriesService.getSubSubCategorie(foodRequestBody.getSubCategoryId()));
+        food.setSubSubCategory(categoriesService.getSubSubCategorie(foodRequestBody.getSubSubCategoryId()));
 
         return foodRepository.save(food);
     }
