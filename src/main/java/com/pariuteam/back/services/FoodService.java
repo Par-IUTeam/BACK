@@ -2,11 +2,16 @@ package com.pariuteam.back.services;
 
 import com.pariuteam.back.models.Food;
 import com.pariuteam.back.repositories.FoodRepository;
+import com.pariuteam.back.requestBodies.FilteredField;
+import com.pariuteam.back.requestBodies.FilteredFoodRequestBody;
 import com.pariuteam.back.requestBodies.FoodRequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class FoodService {
@@ -28,5 +33,15 @@ public class FoodService {
         food.setSubSubCategory(categoriesService.getSubSubCategorie(foodRequestBody.getSubSubCategoryId()));
 
         return foodRepository.save(food);
+    }
+
+    public List<Food> getFoodList(FilteredFoodRequestBody filteredFoodRequestBody){
+        Stream<Food> stream = getAllFoods().stream();
+        
+        for(String fieldName : filteredFoodRequestBody.getFilters().keySet()){
+            stream = FilteredField.FOOD_FILTER_METHODS().get(fieldName).filter(stream,filteredFoodRequestBody.getFilters().get(fieldName));
+        }
+
+        return stream.collect(Collectors.toList());
     }
 }
