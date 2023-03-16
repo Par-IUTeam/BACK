@@ -36,12 +36,13 @@ public class FoodService {
     }
 
     public List<Food> getFoodList(FilteredFoodRequestBody filteredFoodRequestBody){
-        Stream<Food> stream = getAllFoods().stream();
+        List<Food> list = getAllFoods();
         
-        for(String fieldName : filteredFoodRequestBody.getFilters().keySet()){
-            stream = FilteredField.FOOD_FILTER_METHODS().get(fieldName).filter(stream,filteredFoodRequestBody.getFilters().get(fieldName));
-        }
+        if(filteredFoodRequestBody.getFilters()!=null)
+            for(String fieldName : filteredFoodRequestBody.getFilters().keySet()){
+                list = FilteredField.FOOD_FILTER_METHODS().get(fieldName).filter(list,filteredFoodRequestBody.getFilters().get(fieldName));
+            }
 
-        return stream.collect(Collectors.toList());
+        return list;
     }
 }

@@ -4,6 +4,8 @@ import com.pariuteam.back.models.Food;
 
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public enum FilteredField{
@@ -22,30 +24,26 @@ public enum FilteredField{
         HashMap<String,FoodFilterMethod> hashMap = new HashMap<>();
         hashMap.put("name", new FoodFilterMethod() {
             @Override
-            public Stream<Food> filter(Stream<Food> streamFood, String value) {
-                streamFood.filter(food -> food.getFoodName().contains(value));
-                return streamFood;
+            public List<Food> filter(List<Food> list, String value) {
+                return list.stream().filter(food -> food.getFoodName().contains(value)).collect(Collectors.toList());
             }
         });
         hashMap.put("category", new FoodFilterMethod() {
             @Override
-            public Stream<Food> filter(Stream<Food> streamFood, String value) {
-                streamFood.filter(food -> food.getCategory().getCategoryName().equals(value));
-                return streamFood;
+            public List<Food> filter(List<Food> list, String value) {
+               return list.stream().filter(food -> food.getCategory().getCategoryName().equals(value)).collect(Collectors.toList());
             }
         });
         hashMap.put("subCategory", new FoodFilterMethod() {
             @Override
-            public Stream<Food> filter(Stream<Food> streamFood, String value) {
-                streamFood.filter(food -> food.getSubCategory().getSubCategoryName().equals(value));
-                return streamFood;
+            public List<Food> filter(List<Food> list, String value) {
+               return list.stream().filter(food -> food.getSubCategory().getSubCategoryName().equals(value)).collect(Collectors.toList());
             }
         });
         hashMap.put("subSubCategory", new FoodFilterMethod() {
             @Override
-            public Stream<Food> filter(Stream<Food> streamFood, String value) {
-                streamFood.filter(food -> food.getSubSubCategory().getSubSubCategoryName().equals(value));
-                return streamFood;
+            public List<Food> filter(List<Food> list, String value) {
+                return list.stream().filter(food -> food.getSubSubCategory().getSubSubCategoryName().equals(value)).collect(Collectors.toList());
             }
         });
         return hashMap;
