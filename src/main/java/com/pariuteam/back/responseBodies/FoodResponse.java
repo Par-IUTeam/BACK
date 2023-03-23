@@ -8,4 +8,5 @@ public class FoodResponse {
     private Long foodId;
     private String foodName;
     private SubCategory subCategory;
+    private int nbVentes;
 }
