@@ -15,8 +15,8 @@ public class Food {
 
     private String scientificFoodName;
     private String foodName;
-    @ManyToOne
     @JoinColumn(name="category_id")
+    @ManyToOne
     private Category category;
     @JoinColumn(name="sub_category_id")
     @ManyToOne

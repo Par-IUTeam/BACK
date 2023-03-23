@@ -3,6 +3,8 @@ package com.pariuteam.back.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import javax.validation.constraints.Email;
+
 @Data
 @Table(name="users")
 @Entity
@@ -13,6 +15,7 @@ public class User {
     private Long userId;
     private String userName;
     private String userLastName;
+    @Email
     private String mail;
     private Integer streetNumber;
     private String streetName;

@@ -14,19 +14,22 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private UserValidator userValidator;
-    public List<User> getAllUsers(){
+    private UserValidator  userValidator;
+
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     public User addUser(User user) throws ApiException {
-        if(userValidator.isUserValid(user)){
-            if(userRepository.findByMail(user.getMail()).size()==0){
-                return userRepository.save(user);
-            }
+        if (!userValidator.isValid(user)) {
+            return null;
+        }
+
+        if (userValidator.exist(userRepository, user)) {
             throw new ApiException();
         }
-        return null;
+
+        return userRepository.save(user);
     }
 
 }

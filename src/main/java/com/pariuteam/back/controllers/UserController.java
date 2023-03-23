@@ -16,39 +16,42 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@RestController
-public class UserController {
+@RestController @RequestMapping("/users") public class UserController {
     @Autowired
     private UserService userService;
-    @GetMapping("/users/all")
-    public List<User> getAllUsers(){
+
+    @GetMapping("/all")
+    public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @PostMapping("/users")
-    public ResponseEntity<User> addUser(@RequestBody User user){
+    @PostMapping("/")
+    public ResponseEntity<User> addUser(@RequestBody User user) {
         return ResponseEntity.ok().body(userService.addUser(user));
     }
 
-
-
     @Autowired
     private SubSubCategoryRepository subSubCategoryRepository;
+
     @GetMapping("multi/sscateg/{id}/{name}")
-    private SubSubCategory addSubSubCategory(@PathVariable Long id,@PathVariable String name){
-        return subSubCategoryRepository.save(new SubSubCategory(id,name));
+    private SubSubCategory addSubSubCategory(@PathVariable Long id, @PathVariable String name) {
+        return subSubCategoryRepository.save(new SubSubCategory(id, name));
     }
+
     @Autowired
     private SubCategoryRepository subCategoryRepository;
+
     @GetMapping("multi/scateg/{id}/{name}")
-    private SubCategory addSubCategory(@PathVariable Long id,@PathVariable String name){
-        return subCategoryRepository.save(new SubCategory(id,name));
+    private SubCategory addSubCategory(@PathVariable Long id, @PathVariable String name) {
+        return subCategoryRepository.save(new SubCategory(id, name));
     }
+
     @Autowired
     private CategoryRepository categoryRepository;
+
     @GetMapping("multi/categ/{id}/{name}")
-    private Category addCategory(@PathVariable Long id, @PathVariable String name){
-        return categoryRepository.save(new Category(id,name));
+    private Category addCategory(@PathVariable Long id, @PathVariable String name) {
+        return categoryRepository.save(new Category(id, name));
     }
 
 }
