@@ -34,21 +34,58 @@ public class UserController {
 
     @Autowired
     private SubSubCategoryRepository subSubCategoryRepository;
-    @GetMapping("multi/sscateg/{id}/{name}")
-    private SubSubCategory addSubSubCategory(@PathVariable Long id,@PathVariable String name){
-        return subSubCategoryRepository.save(new SubSubCategory(id,name));
-    }
     @Autowired
     private SubCategoryRepository subCategoryRepository;
-    @GetMapping("multi/scateg/{id}/{name}")
-    private SubCategory addSubCategory(@PathVariable Long id,@PathVariable String name){
-        return subCategoryRepository.save(new SubCategory(id,name));
-    }
     @Autowired
     private CategoryRepository categoryRepository;
-    @GetMapping("multi/categ/{id}/{name}")
-    private Category addCategory(@PathVariable Long id, @PathVariable String name){
-        return categoryRepository.save(new Category(id,name));
+
+    @GetMapping("multi/{idCateg}/{nameCateg}/{idSCateg}/{nameSCateg}/{idSSCateg}/{nameSSCateg}/")
+    private SubSubCategory addSubSubCategory(@PathVariable(name="idCateg") Long idCateg,@PathVariable(name="nameCateg") String nameCateg,
+                                             @PathVariable(name="idSCateg") Long idSCateg,@PathVariable(name="nameSCateg") String nameSCateg,
+                                             @PathVariable(name="idSSCateg") Long idSSCateg,@PathVariable(name="nameSSCateg") String nameSSCateg){
+
+        Category category = new Category();
+        SubCategory subCategory = new SubCategory();
+        SubSubCategory subSubCategory = new SubSubCategory();
+
+        if(!categoryRepository.findAll().stream().anyMatch(categ->{return categ.getCategoryId()==idCateg;})){
+            category.setCategoryId(idCateg);
+            category.setCategoryName(nameCateg);
+        }else category = categoryRepository.findById(idCateg).get();
+        if(!subCategoryRepository.findAll().stream().anyMatch(subCateg->{return subCateg.getSubCategoryId()==idSCateg;})){
+            subCategory.setSubCategoryId(idSCateg);
+            subCategory.setSubCategoryName(nameSCateg);
+            subCategory.setCategory(category);
+        }else subCategory = subCategoryRepository.findById(idSCateg).get();
+        if(!subSubCategoryRepository.findAll().stream().anyMatch(subSubCateg->{return subSubCateg.getSubSubCategoryId()==idSSCateg;})){
+            subSubCategory.setSubSubCategoryId(idSSCateg);
+            subSubCategory.setSubSubCategoryName(nameSSCateg);
+            subSubCategory.setSubCategory(subCategory);
+            return subSubCategoryRepository.save(subSubCategory);
+        }
+        return null;
+    }
+    @GetMapping("scateg/{idCateg}/{nameCateg}/{idSCateg}/{nameSCateg}/")
+    private SubCategory addSubSubCategory(@PathVariable(name="idCateg") String strIdCateg,@PathVariable(name="nameCateg") String nameCateg,
+                                             @PathVariable(name="idSCateg") String strIdSCateg,@PathVariable(name="nameSCateg") String nameSCateg){
+        Long idCateg = Long.valueOf(strIdCateg);
+        Long idSCateg = Long.valueOf(strIdSCateg);
+
+        Category category = new Category();
+        SubCategory subCategory = new SubCategory();
+
+        if(!categoryRepository.findAll().stream().anyMatch(categ->{return categ.getCategoryId()==idCateg;})){
+            category.setCategoryId(idCateg);
+            category.setCategoryName(nameCateg);
+            categoryRepository.save(category);
+        }else category = categoryRepository.findById(idCateg).get();
+        if(!subCategoryRepository.findAll().stream().anyMatch(subCateg->{return subCateg.getSubCategoryId()==idSCateg;})){
+            subCategory.setSubCategoryId(idSCateg);
+            subCategory.setSubCategoryName(nameSCateg);
+            subCategory.setCategory(category);
+            return subCategoryRepository.save(subCategory);
+        }
+        return null;
     }
 
 }
