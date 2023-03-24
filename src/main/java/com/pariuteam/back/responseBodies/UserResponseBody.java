@@ -1,10 +1,9 @@
 package com.pariuteam.back.responseBodies;
 
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 @Data
 public class UserResponseBody {
     private String nom;
@@ -13,6 +12,6 @@ public class UserResponseBody {
     private String code_postal;
     private String ville;
     private String telephone;
-    @Temporal(TemporalType.DATE)
-    private Date date;
+    @JsonFormat(pattern="dd-MM-yyyy")
+    private LocalDate date;
 }
