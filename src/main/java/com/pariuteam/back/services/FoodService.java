@@ -8,14 +8,17 @@ import com.pariuteam.back.requestBodies.FoodRequestBody;
 import com.pariuteam.back.responseBodies.FoodResponse;
 import com.pariuteam.back.responseBodies.mappers.FoodResponseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Optionals;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FoodService {
     @Autowired
     private FoodRepository foodRepository;
-    @Autowired CategoriesService categoriesService;
+    @Autowired
+    private CategoriesService categoriesService;
     public List<FoodResponse> getAllFoods(){
         return new FoodResponseMapper().toDomain(foodRepository.findAll());
     }
@@ -58,5 +61,12 @@ public class FoodService {
             }
 
         return new FoodResponseMapper().toDomain(list);
+    }
+
+    public Food getFood(Long foodId) {
+        Optional<Food> food = (foodRepository.findById(foodId));
+        if(food.isPresent()){
+            return food.get();
+        }else throw new IllegalArgumentException();
     }
 }

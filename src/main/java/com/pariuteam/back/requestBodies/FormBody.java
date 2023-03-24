@@ -10,5 +10,5 @@ import java.util.List;
 public class FormBody {
     @Valid
     private User user;
-    private List<Food> listeAliments;
+    private List<Long> listeAliments;
 }

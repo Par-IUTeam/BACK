@@ -18,7 +18,7 @@ public class FormService {
 
     public FormBody registerForm(@Valid FormBody formBody){
         userService.addUser(formBody.getUser());
-        formBody.getListeAliments().stream().map(food -> favouriteFoodRepository.save(new FavouriteFood(food, formBody.getUser())));
+        formBody.getListeAliments().stream().map(foodId -> favouriteFoodRepository.save(new FavouriteFood(foodService.getFood(foodId), formBody.getUser())));
         return formBody;
     }
 }

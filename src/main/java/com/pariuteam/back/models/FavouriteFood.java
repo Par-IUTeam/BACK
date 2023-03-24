@@ -3,6 +3,7 @@ package com.pariuteam.back.models;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Controller;
 
 @Entity
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 @IdClass(FavouriteFoodId.class)
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class FavouriteFood {
     @Id
     @ManyToOne
@@ -21,6 +23,5 @@ public class FavouriteFood {
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
-
 
 }
