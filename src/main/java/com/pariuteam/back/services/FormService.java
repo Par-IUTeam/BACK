@@ -3,6 +3,7 @@ package com.pariuteam.back.services;
 import com.pariuteam.back.models.FavouriteFood;
 import com.pariuteam.back.repositories.FavouriteFoodRepository;
 import com.pariuteam.back.requestBodies.FormBody;
+import com.pariuteam.back.responseBodies.mappers.UserResponseMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class FormService {
 
     public FormBody registerForm(@Valid FormBody formBody){
         userService.addUser(formBody.getUser());
-        formBody.getListeAliments().stream().map(foodId -> favouriteFoodRepository.save(new FavouriteFood(foodService.getFood(foodId), formBody.getUser())));
+        formBody.getListeAliments().stream().map(foodId -> favouriteFoodRepository.save(new FavouriteFood(foodService.getFood(foodId), new UserResponseMapper().toDomain(formBody.getUser()))));
         return formBody;
     }
 }

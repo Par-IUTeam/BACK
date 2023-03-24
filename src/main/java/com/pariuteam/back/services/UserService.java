@@ -3,6 +3,8 @@ package com.pariuteam.back.services;
 import com.pariuteam.back.exceptions.handlers.ApiException;
 import com.pariuteam.back.models.User;
 import com.pariuteam.back.repositories.UserRepository;
+import com.pariuteam.back.responseBodies.UserResponseBody;
+import com.pariuteam.back.responseBodies.mappers.UserResponseMapper;
 import com.pariuteam.back.validators.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User addUser(User user) throws ApiException {
+    public User addUser(UserResponseBody userResponseBody) throws ApiException {
+        User user = new UserResponseMapper().toDomain(userResponseBody);
         if(userValidator.isUserValid(user)){
             if(userRepository.findByMail(user.getMail()).size()==0){
                 return userRepository.save(user);

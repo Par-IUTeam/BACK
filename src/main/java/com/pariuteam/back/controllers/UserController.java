@@ -8,6 +8,7 @@ import com.pariuteam.back.models.categories.SubSubCategory;
 import com.pariuteam.back.repositories.categories.CategoryRepository;
 import com.pariuteam.back.repositories.categories.SubCategoryRepository;
 import com.pariuteam.back.repositories.categories.SubSubCategoryRepository;
+import com.pariuteam.back.responseBodies.UserResponseBody;
 import com.pariuteam.back.services.UserService;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.JoinTable;
@@ -30,8 +31,8 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<User> addUser(@RequestBody User user){
-        return ResponseEntity.ok().body(userService.addUser(user));
+    public ResponseEntity<User> addUser(@RequestBody UserResponseBody userResponseBody){
+        return ResponseEntity.ok().body(userService.addUser(userResponseBody));
     }
 
     @Autowired

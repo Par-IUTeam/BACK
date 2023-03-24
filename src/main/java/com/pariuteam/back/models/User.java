@@ -3,6 +3,7 @@ package com.pariuteam.back.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -16,12 +17,11 @@ public class User {
     private String userName;
     private String userLastName;
     private String mail;
-    private Integer streetNumber;
-    private String streetName;
-    private String buildingNumber;
-    private String flatNumber;
     private String cityName;
     private String postalCode;
+    @Temporal(TemporalType.DATE)
+    private Date birthdate;
+    private String phoneNumber;
 
 
     @ManyToMany
