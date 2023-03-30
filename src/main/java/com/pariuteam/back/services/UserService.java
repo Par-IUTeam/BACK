@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -20,7 +21,6 @@ public class UserService {
     public List<User> getAllUsers(){
         return userRepository.findAll();
     }
-
     public User addUser(UserResponseBody userResponseBody) throws ApiException {
         User user = new UserResponseMapper().toDomain(userResponseBody);
         if(userValidator.isUserValid(user)){
@@ -30,6 +30,12 @@ public class UserService {
             throw new ApiException();
         }
         return null;
+    }
+    public User getUser(Long userId) throws ApiException {
+        Optional<User> user = userRepository.findById(userId);
+        if(!user.isPresent())
+            throw new ApiException();
+        return user.get();
     }
 
 }
