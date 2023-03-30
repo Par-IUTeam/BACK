@@ -26,8 +26,6 @@ public class Food {
     @JoinColumn(name="sub_sub_category_id")
     @ManyToOne
     private SubSubCategory subSubCategory;
-
-    @ManyToMany(mappedBy = "foodList")
-    private List<User> consumers;
+    private Integer numberFavourite;
 
 }

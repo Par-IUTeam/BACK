@@ -23,11 +23,4 @@ public class User {
     private Date birthdate;
     private String phoneNumber;
 
-
-    @ManyToMany
-    @JoinTable(name = "favourite_foods",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "food_id")})
-    private List<Food> foodList;
-
 }

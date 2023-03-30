@@ -69,4 +69,8 @@ public class FoodService {
             return food.get();
         }else throw new IllegalArgumentException();
     }
+
+    public Food updateFood(Food food) {
+        return foodRepository.save(food);
+    }
 }

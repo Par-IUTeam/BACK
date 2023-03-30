@@ -1,6 +1,7 @@
 package com.pariuteam.back.services;
 
 import com.pariuteam.back.models.FavouriteFood;
+import com.pariuteam.back.models.Food;
 import com.pariuteam.back.models.User;
 import com.pariuteam.back.repositories.FavouriteFoodRepository;
 import com.pariuteam.back.requestBodies.FormBody;
@@ -22,7 +23,10 @@ public class FormService {
     public FormBody registerForm(@Valid FormBody formBody){
         User user = userService.addUser(formBody.getUser());
         formBody.getListeAliments().stream().forEach(foodId -> {
-            FavouriteFood favouriteFood = new FavouriteFood(foodService.getFood(Long.valueOf(foodId)), userService.getUser(user.getUserId()));
+            Food food = foodService.getFood(Long.valueOf(foodId));
+            FavouriteFood favouriteFood = new FavouriteFood(food, userService.getUser(user.getUserId()));
+            food.setNumberFavourite(food.getNumberFavourite()+1);
+            foodService.updateFood(food);
             favouriteFoodRepository.save(favouriteFood);
         }
     );
