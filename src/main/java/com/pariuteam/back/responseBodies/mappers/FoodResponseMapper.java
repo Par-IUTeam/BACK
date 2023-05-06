@@ -16,6 +16,7 @@ public class FoodResponseMapper extends Mapper<Food, FoodResponse> {
         result.setFoodId(actual.getFoodId());
         result.setSubCategory(actual.getSubCategory());
         result.setFoodName(actual.getFoodName());
+        result.setSubSubCategory(actual.getSubSubCategory());
         result.setNbVentes(actual.getNumberFavourite());
         return result;
     }

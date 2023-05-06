@@ -9,16 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 @Getter
-public enum FilterService{
-    NAME(FOOD_FILTER_METHODS().get("name")) ,
-    CATEGORY(FOOD_FILTER_METHODS().get("category")),
-    SUB_CATEGORY(FOOD_FILTER_METHODS().get("subCategory")),
-    SUB_SUB_CATEGORY(FOOD_FILTER_METHODS().get("subSubCategory"));
-
-    private FoodFilterMethod foodFilterMethod;
-    FilterService(FoodFilterMethod foodFilterMethod) {
-        this.foodFilterMethod = foodFilterMethod;
-    }
+public class FilterService{
 
    public static HashMap<String,FoodFilterMethod> FOOD_FILTER_METHODS(){
         HashMap<String,FoodFilterMethod> hashMap = new HashMap<>();
@@ -46,8 +37,32 @@ public enum FilterService{
                 return list.stream().filter(food -> food.getSubSubCategory().getSubSubCategoryId().equals(Long.valueOf(value))).collect(Collectors.toList());
             }
         });
+       hashMap.put("vegan", new FoodFilterMethod() {
+           @Override
+           public List<Food> filter(List<Food> streamFood, String value) {
+               return streamFood.stream().filter(food->{
+                   return food.getCategory().getCategoryId()!=4&&food.getCategory().getCategoryId()!=5&&!food.getFoodName().contains("viande")&&!food.getSubCategory().getSubCategoryName().contains("viande")&&!food.getSubSubCategory().getSubSubCategoryName().contains("viande");
+               }).collect(Collectors.toList());
+           }
+       });
+       hashMap.put("halal", new FoodFilterMethod() {
+           @Override
+           public List<Food> filter(List<Food> streamFood, String value) {
+               return streamFood.stream().filter(food->{
+                   return food.getCategory().getCategoryId()!=4&&!food.getFoodName().contains("viande")&&!food.getSubCategory().getSubCategoryName().contains("viande")&&!food.getSubSubCategory().getSubSubCategoryName().contains("viande")&&food.getSubCategory().getSubCategoryId()!=603||(food.getSubSubCategory().getSubSubCategoryName().contains("halal"));
+               }).collect(Collectors.toList());
+           }
+       });
+       hashMap.put("casher", new FoodFilterMethod() {
+           @Override
+           public List<Food> filter(List<Food> streamFood, String value) {
+               return streamFood.stream().filter(food->{
+                   return (food.getCategory().getCategoryId()!=4&&!food.getFoodName().contains("viande")&&!food.getSubCategory().getSubCategoryName().contains("viande")&&!food.getSubSubCategory().getSubSubCategoryName().contains("viande")&&food.getCategory().getCategoryId()!=5)||(food.getSubSubCategory().getSubSubCategoryName().contains("casher"));
+               }).collect(Collectors.toList());
+           }
+       });
         return hashMap;
-    }
+   }
 
 }
 

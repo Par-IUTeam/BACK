@@ -3,6 +3,7 @@ package com.pariuteam.back.services;
 import com.pariuteam.back.models.Food;
 import com.pariuteam.back.repositories.FoodRepository;
 import com.pariuteam.back.requestBodies.FilteredFoodRequestBody;
+import com.pariuteam.back.requestBodies.FoodFilterMethod;
 import com.pariuteam.back.services.FilterService;
 import com.pariuteam.back.requestBodies.FoodRequestBody;
 import com.pariuteam.back.responseBodies.FoodResponse;
@@ -38,26 +39,18 @@ public class FoodService {
 
     public List<FoodResponse> getFoodList(FilteredFoodRequestBody filteredFoodRequestBody){
         List<Food> list = foodRepository.findAll();
-        
+
         if(filteredFoodRequestBody.getFilters()!=null)
             for(String filterName  : filteredFoodRequestBody.getFilters().keySet()){
-                FilterService filter = null;
                 String value = filteredFoodRequestBody.getFilters().get(filterName);
-                switch(filterName){
-                    case "name":
-                        filter = FilterService.NAME;
-                        break;
-                    case "category":
-                        filter = FilterService.CATEGORY;
-                        break;
-                    case "subCategory":
-                        filter = FilterService.SUB_CATEGORY;
-                        break;
-                    case "subSubCategory":
-                        filter = FilterService.SUB_SUB_CATEGORY;
-                        break;
-                }
-                list = filter.getFoodFilterMethod().filter(list,value);
+
+                FoodFilterMethod filterMethod = FilterService.FOOD_FILTER_METHODS().get(value);
+                list = filterMethod.filter(list,value);
+            }
+        if(filteredFoodRequestBody.getSpecialFilters()!=null)
+            for(String filterName  : filteredFoodRequestBody.getSpecialFilters()){
+                FoodFilterMethod filterMethod = FilterService.FOOD_FILTER_METHODS().get(filterName);
+                list = filterMethod.filter(list,null);
             }
 
         return new FoodResponseMapper().toDomain(list);
