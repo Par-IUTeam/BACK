@@ -21,7 +21,7 @@ public class FoodController {
     private FoodService foodService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<FoodResponse>> getAllFoods(){
+    public ResponseEntity<List<Food>> getAllFoods(){
         return ResponseEntity.ok().body(foodService.getAllFoods());
     }
     @GetMapping("/filtered")

@@ -22,13 +22,13 @@ public class FilterService{
         hashMap.put("category", new FoodFilterMethod() {
             @Override
             public List<Food> filter(List<Food> list, String value) {
-               return list.stream().filter(food -> food.getCategory().getCategoryId().equals(Long.valueOf(value))).collect(Collectors.toList());
+               return list.stream().filter(food -> food.getSubSubCategory().getSubCategory().getCategory().getCategoryId().equals(Long.valueOf(value))).collect(Collectors.toList());
             }
         });
         hashMap.put("subCategory", new FoodFilterMethod() {
             @Override
             public List<Food> filter(List<Food> list, String value) {
-               return list.stream().filter(food -> food.getSubCategory().getSubCategoryId().equals(Long.valueOf(value))).collect(Collectors.toList());
+               return list.stream().filter(food -> food.getSubSubCategory().getSubCategory().getSubCategoryId().equals(Long.valueOf(value))).collect(Collectors.toList());
             }
         });
         hashMap.put("subSubCategory", new FoodFilterMethod() {
@@ -41,7 +41,7 @@ public class FilterService{
            @Override
            public List<Food> filter(List<Food> streamFood, String value) {
                return streamFood.stream().filter(food->{
-                   return food.getCategory().getCategoryId()!=4&&food.getCategory().getCategoryId()!=5&&!food.getFoodName().contains("viande")&&!food.getSubCategory().getSubCategoryName().contains("viande")&&!food.getSubSubCategory().getSubSubCategoryName().contains("viande");
+                   return food.getSubSubCategory().getSubCategory().getCategory().getCategoryId()!=4&&food.getSubSubCategory().getSubCategory().getCategory().getCategoryId()!=5&&!food.getFoodName().contains("viande")&&!food.getSubSubCategory().getSubCategory().getSubCategoryName().contains("viande")&&!food.getSubSubCategory().getSubSubCategoryName().contains("viande");
                }).collect(Collectors.toList());
            }
        });
@@ -49,7 +49,7 @@ public class FilterService{
            @Override
            public List<Food> filter(List<Food> streamFood, String value) {
                return streamFood.stream().filter(food->{
-                   return food.getCategory().getCategoryId()!=4&&!food.getFoodName().contains("viande")&&!food.getSubCategory().getSubCategoryName().contains("viande")&&!food.getSubSubCategory().getSubSubCategoryName().contains("viande")&&food.getSubCategory().getSubCategoryId()!=603||(food.getSubSubCategory().getSubSubCategoryName().contains("halal"));
+                   return food.getSubSubCategory().getSubCategory().getCategory().getCategoryId()!=4&&!food.getFoodName().contains("viande")&&!food.getSubSubCategory().getSubCategory().getSubCategoryName().contains("viande")&&!food.getSubSubCategory().getSubSubCategoryName().contains("viande")&&food.getSubSubCategory().getSubCategory().getSubCategoryId()!=603||(food.getSubSubCategory().getSubSubCategoryName().contains("halal"));
                }).collect(Collectors.toList());
            }
        });
@@ -57,7 +57,7 @@ public class FilterService{
            @Override
            public List<Food> filter(List<Food> streamFood, String value) {
                return streamFood.stream().filter(food->{
-                   return (food.getCategory().getCategoryId()!=4&&!food.getFoodName().contains("viande")&&!food.getSubCategory().getSubCategoryName().contains("viande")&&!food.getSubSubCategory().getSubSubCategoryName().contains("viande")&&food.getCategory().getCategoryId()!=5)||(food.getSubSubCategory().getSubSubCategoryName().contains("casher"));
+                   return (food.getSubSubCategory().getSubCategory().getCategory().getCategoryId()!=4&&!food.getFoodName().contains("viande")&&!food.getSubSubCategory().getSubCategory().getSubCategoryName().contains("viande")&&!food.getSubSubCategory().getSubSubCategoryName().contains("viande")&&food.getSubSubCategory().getSubCategory().getCategory().getCategoryId()!=5)||(food.getSubSubCategory().getSubSubCategoryName().contains("casher"));
                }).collect(Collectors.toList());
            }
        });

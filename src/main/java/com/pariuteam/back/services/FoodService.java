@@ -20,8 +20,8 @@ public class FoodService {
     private FoodRepository foodRepository;
     @Autowired
     private CategoriesService categoriesService;
-    public List<FoodResponse> getAllFoods(){
-        return new FoodResponseMapper().toDomain(foodRepository.findAll());
+    public List<Food> getAllFoods(){
+        return (foodRepository.findAll());
     }
 
     public FoodResponse addFood(FoodRequestBody foodRequestBody) {
@@ -30,8 +30,6 @@ public class FoodService {
         food.setFoodId(foodRequestBody.getFoodId());
         food.setFoodName(foodRequestBody.getFoodName());
         food.setScientificFoodName(foodRequestBody.getScientificFoodName());
-        food.setCategory(categoriesService.getCategorie(foodRequestBody.getCategoryId()));
-        food.setSubCategory(categoriesService.getSubCategorie(foodRequestBody.getSubCategoryId()));
         food.setSubSubCategory(categoriesService.getSubSubCategorie(foodRequestBody.getSubSubCategoryId()));
 
         return new FoodResponseMapper().toDomain(foodRepository.save(food));
