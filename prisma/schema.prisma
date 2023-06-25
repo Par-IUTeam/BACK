@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Address {
+  id     Int     @id @default(autoincrement())
+  street String?
+  city   String?
+  zip    String?
+  @@unique([street, city, zip])
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  birthdate DateTime
+  firstname String?
+  lastname  String?
+  survey   Survey[]
+}
+
+model Aliment {
+  code                String           @id @unique
+  name                String
+  category            Aliment_Category @relation(fields: [alimentCategoryCode], references: [code])
+  subCategory         Aliment_SubCategory? @relation(fields: [alimentSubCategoryCode], references: [code])
+  subSubCategory      Aliment_SubSubCategory? @relation(fields: [alimentSubSubCategoryCode], references: [code])
+  alimentCategoryCode String
+  alimentSubCategoryCode String?
+  alimentSubSubCategoryCode String?
+  survey             Survey[]
+}
+
+model Survey {
+  id          Int      @id @default(autoincrement())
+  date        DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+  aliment     Aliment  @relation(fields: [alimentCode], references: [code])
+  userId      Int
+  alimentCode String
+
+  @@unique([userId, alimentCode])
+}
+
+model Aliment_Category {
+  code          String                @id @unique
+  name          String
+  aliments      Aliment[]
+  subCategories Aliment_SubCategory[]
+}
+
+model Aliment_SubCategory {
+  code                String                   @id @unique
+  name                String
+  subSubCategories    Aliment_SubSubCategory[]
+  Aliment_Category    Aliment_Category         @relation(fields: [alimentCategoryCode], references: [code])
+  alimentCategoryCode String
+  aliments            Aliment[]
+}
+
+model Aliment_SubSubCategory {
+  code                   String              @id @unique
+  name                   String
+  Aliment_SubCategory    Aliment_SubCategory @relation(fields: [alimentSubCategoryCode], references: [code])
+  alimentSubCategoryCode String
+  aliments               Aliment[]
+}
