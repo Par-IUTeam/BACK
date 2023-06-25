@@ -41,6 +41,17 @@ const AlimentReturnsGetPaginationCategorySchema = Type.Object({
     nextPage: Type.Boolean()
 })
 
+const AlimentReturnsGetAllCategorySchema = Type.Object({
+
+    code: Type.String(),
+    name: Type.String(),
+    category: AlimentReturnsGetCategorySchema,
+    subCategory: AlimentReturnsGetCategorySchema,
+    subSubCategory: AlimentReturnsGetCategorySchema,
+    count: Type.Number()
+
+})
+
 const AlimentBodyDeleteSchema = Type.Object({
     code: Type.String()
 });
@@ -85,7 +96,7 @@ export const AlimentGetAllSchema: FastifySchema = {
     summary: "get all aliments",
     operationId: "getAllAliments",
     response: {
-        200: Type.Array(Type.Ref(AlimentSchema))
+        200: Type.Array(AlimentReturnsGetAllCategorySchema)
     }
 }
 

@@ -80,8 +80,17 @@ export default class AlimentService {
     }
 
     async getAllAliments(): Promise<Partial<Aliment[]>> {
-        return prisma.aliment.findMany({
-            select: AlimentService.AlimentPublicSelect
+        return await prisma.aliment.findMany({
+            include: {
+                _count: {
+                    select: {
+                        survey: true
+                    }
+                },
+                category: true,
+                subCategory: true,
+                subSubCategory: true,
+            },
         }) as unknown as Aliment[];
     }
 

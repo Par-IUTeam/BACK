@@ -78,10 +78,16 @@ export default class alimentController {
             
         let res = await this.alimentService.getAllAliments();
 
-
         res.forEach(aliment => {
             //@ts-expect-error
             aliment.subSubCategory = aliment.subSubCategory ?? {code: null, name: null}
+            //@ts-expect-error
+            aliment.count = aliment?._count?.survey ?? 0
+            delete aliment.alimentCategoryCode;
+            delete aliment.alimentSubCategoryCode;
+            delete aliment.alimentSubSubCategoryCode;
+            //@ts-expect-error
+            delete aliment._count;
         })
         return reply.code(200).send(res);
     }
